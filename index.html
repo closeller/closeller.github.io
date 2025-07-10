@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Threads - Premium Clothing Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for animations and transitions */
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .cart-notification {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .dropdown-menu {
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/11bab59c-623c-4685-a26b-9e3c2fff264a.png" alt="Urban Threads logo in navy blue with stylized UT initials" class="h-8">
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-4">
+                        <a href="#" class="px-3 py-2 text-sm font-medium text-gray-900 hover:text-blue-600 hover:border-b-2 hover:border-blue-600 transition-all">Home</a>
+                        <a href="#" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-blue-600 hover:border-b-2 hover:border-blue-600 transition-all">Men</a>
+                        <a href="#" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-blue-600 hover:border-b-2 hover:border-blue-600 transition-all">Women</a>
+                        <a href="#" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-blue-600 hover:border-b-2 hover:border-blue-600 transition-all">Kids</a>
+                        <a href="#" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-blue-600 hover:border-b-2 hover:border-blue-600 transition-all">Sale</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="relative ml-4">
+                        <button id="cart-btn" class="text-gray-600 hover:text-gray-900 p-2 rounded-full focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            <span id="cart-count" class="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </button>
+                        <div id="cart-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg overflow-hidden z-20">
+                            <div class="py-2 bg-gray-50 px-4">
+                                <p class="text-sm font-medium text-gray-900">Your Cart</p>
+                            </div>
+                            <div id="cart-items" class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+                                <div class="p-4 text-center text-gray-500">
+                                    Your cart is empty
+                                </div>
+                            </div>
+                            <div class="p-4 border-t border-gray-200 bg-gray-50">
+                                <a href="#" class="block text-center w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200 font-medium mb-2">Checkout</a>
+                                <div class="flex justify-center space-x-4 mt-2">
+                                    <div class="flex items-center">
+                                        <input type="radio" id="card-payment" name="payment" checked class="mr-2">
+                                        <label for="card-payment" class="text-sm">Credit/Debit Card</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="radio" id="upi-payment" name="payment" class="mr-2">
+                                        <label for="upi-payment" class="text-sm">UPI</label>
+                                    </div>
+                                </div>
+                                <div class="mt-4 text-xs text-gray-500 text-center">
+                                    Secure Payment • 100% Buyer Protection
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ml-4 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative bg-gray-900 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 bg-gray-900 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                <div class="pt-10 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
+                    <div class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                        <div class="sm:text-center lg:text-left">
+                            <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
+                                <span class="block">Summer Collection</span>
+                                <span class="block text-blue-400">2023</span>
+                            </h1>
+                            <p class="mt-3 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                                Discover our premium quality clothing with exclusive designs for every occasion.
+                            </p>
+                            <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                                <div class="rounded-md shadow">
+                                    <a href="#featured-products" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transform hover:scale-105 transition-transform duration-200 shadow-lg">
+                                        Shop Now ➔
+                                    </a>
+                                </div>
+                                <div class="mt-3 sm:mt-0 sm:ml-3">
+                                    <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10">
+                                        View Collection
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:wf-1/2">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/beaff3cb-74d0-423f-aa72-75266efb9eeb.png" alt="Stylish model wearing summer collection clothes in neutral tones posing against modern city backdrop" class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full">
+        </div>
+    </div>
+
+    <!-- Featured Categories -->
+    <div class="bg-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Shop by Category
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    Find exactly what you're looking for in our carefully curated collections
+                </p>
+            </div>
+
+            <div class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+                <a href="#" class="group relative rounded-lg overflow-hidden bg-gray-100 h-64 hover:shadow-lg transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d5beac20-7c09-46a7-acbc-0effb47cf156.png" alt="Casual men's t-shirts and shirts on hangers in various colors" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 text-center">
+                        <h3 class="text-lg font-medium text-white">Men's Wear</h3>
+                    </div>
+                </a>
+                
+                <a href="#" class="group relative rounded-lg overflow-hidden bg-gray-100 h-64 hover:shadow-lg transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/359fb725-02e1-492d-923d-c811444ad99b.png" alt="Elegant women's dresses displayed on mannequins with soft lighting" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 text-center">
+                        <h3 class="text-lg font-medium text-white">Women's Wear</h3>
+                    </div>
+                </a>
+                
+                <a href="#" class="group relative rounded-lg overflow-hidden bg-gray-100 h-64 hover:shadow-lg transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ae4ee998-7739-4b72-b1ec-e7c3c38f2343.png" alt="Colorful children's clothes arranged on wooden shelves" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 text-center">
+                        <h3 class="text-lg font-medium text-white">Kids</h3>
+                    </div>
+                </a>
+                
+                <a href="#" class="group relative rounded-lg overflow-hidden bg-gray-100 h-64 hover:shadow-lg transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a3c4a1c1-da92-4fc7-9700-a5082577482b.png" alt="Pair of contemporary footwear on marble surface with neutral background" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 text-center">
+                        <h3 class="text-lg font-medium text-white">Footwear</h3>
+                    </div>
+                </a>
+                
+                <a href="#" class="group relative rounded-lg overflow-hidden bg-gray-100 h-64 hover:shadow-lg transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d9feff31-4de6-48ee-92cf-95935f6e46c6.png" alt="Assortment of fashion accessories including watches, sunglasses and jewelry arranged neatly" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 text-center">
+                        <h3 class="text-lg font-medium text-white">Accessories</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <div id="featured-products" class="bg-gray-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    New Arrivals
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    Check out our latest products fresh off the runway
+                </p>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                <!-- Product 1 -->
+                <div class="product-card group relative bg-white p-4 rounded-lg shadow-sm hover:shadow-md">
+                    <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/85787ee7-1bde-47c5-a2de-d79a69729b38.png" alt="Premium slim fit navy blue blazer with golden buttons on white background" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+                        <div class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">NEW</div>
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="#">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    Slim Fit Blazer
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">Navy Blue</p>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900">$129.99</p>
+                    </div>
+                    <button class="mt-2 w-full bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-800 transition duration-200 add-to-cart" 
+                            data-id="1" 
+                            data-name="Slim Fit Blazer" 
+                            data-price="129.99" 
+                            data-image="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ab4ca961-c5bc-421b-b3a1-5e818c1fb45c.png">
+                        Add to Cart
+                    </button>
+                    <button class="mt-2 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200 buy-now">
+                        Buy Now
+                    </button>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card group relative bg-white p-4 rounded-lg shadow-sm hover:shadow-md">
+                    <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a64d7ffc-ded0-4883-9618-214ef0c2160b.png" alt="Floral summer dress with v-neckline and flowing fabric draped on mannequin" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="#">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    Floral Summer Dress
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">Multicolor</p>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900">$89.99</p>
+                    </div>
+                    <button class="mt-2 w-full bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-800 transition duration-200 add-to-cart" 
+                            data-id="2" 
+                            data-name="Floral Summer Dress" 
+                            data-price="89.99" 
+                            data-image="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2fea98f4-fd39-4a8a-b18f-1c40a6208976.png">
+                        Add to Cart
+                    </button>
+                    <button class="mt-2 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200 buy-now">
+                        Buy Now
+                    </button>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card group relative bg-white p-4 rounded-lg shadow-sm hover:shadow-md">
+                    <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2a1a7725-b3ee-4dec-ab58-fd360b97340a.png" alt="Casual white cotton t-shirt with small logo print on chest" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+                        <div class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">BESTSELLER</div>
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="#">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    Classic Logo Tee
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">White</p>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900">$24.99</p>
+                    </div>
+                    <button class="mt-2极阳 w-full bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-800 transition duration-200 add-to-cart" 
+                            data-id="3" 
+                            data-name="Classic Logo Tee" 
+                            data-price="24.99" 
+                            data-image="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5ffc32c1-dc0d-4e33-8c06-ef4b912dc928.png">
+                        Add to Cart
+                    </button>
+                    <button class="mt-2 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200 buy-now">
+                        Buy Now
+                    </button>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card group relative bg-white p-4 rounded-lg shadow-sm hover:shadow-md">
+                    <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/jeans.webp" alt="Premium dark wash slim fit jeans with distressed details laid flat" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="#">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    Slim Fit Jeans
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">Dark Wash | Stretchable</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <p class="text-sm font-medium text-gray-900">₹1,999 <span class="text-xs line-through text-gray-500">₹2,999</span></p>
+                            <span class="text-xs text-green-600">33% OFF</span>
+                        </div>
+                    </div>
+                    <button class="mt-2 w-full bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-800 transition duration-200 add-to-cart" 
+                            data-id="4" 
+                            data-name="Slim Fit Jeans" 
+                            data-price="1999" 
+                            data-image="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/jeans.webp">
+                        Add to Cart
+                    </button>
+                    <button class="mt-2 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200 buy-now">
+                        Buy Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="bg-gray-900 py-16 sm:py-24">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-blue-700 rounded-2xl px-6 py-16 sm:p-16">
+                <div class="max-w-xl mx-auto lg:max-w-none lg:flex lg:items-center">
+                    <div class="lg:w-0 lg:flex-1">
+                        <h2 class="text-2xl font-extrabold tracking-tight text-white">
+                            Sign up for our newsletter
+                        </h2>
+                        <p class="mt-4 max-w-3xl text-lg leading-6 text-blue-200">
+                            Stay updated with our latest collections, exclusive offers, and fashion tips.
+                        </p>
+                    </div>
+                    <div class="mt-12 sm:w-full sm:max-w-md lg:mt-0 lg:ml-8">
+                        <form class="sm:flex">
+                            <label for="email-address" class="sr-only">Email address</label>
+                            <input id="email-address" name="email-address" type="email" autocomplete="email" required class="w-full px-5 py-3 border border-transparent placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-700 focus:ring-white focus:border-white sm:max-w-xs rounded-md" placeholder="Enter your email">
+                            <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                                <button type="submit" class="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-700 focus:ring-white">
+                                    Subscribe
+                                </button>
+                            </div>
+                        </form>
+                        <p class="mt-3 text-sm text-blue-200">
+                            We care about your data. Read our
+                            <a href="#" class="text-white font-medium underline">
+                                Privacy Policy
+                            </a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                        Shop
+                    </h3>
+                    <div class="mt-4 space-y-4">
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Men's Clothing</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Women's Clothing</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Kids' Collection</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Accessories</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                        Customer Service
+                    </h3>
+                    <div class="mt-4 space-y-4">
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Contact Us</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">FAQs</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Shipping & Returns</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Size Guide</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                        About Us
+                    </h3>
+                    <div class="mt-4 space-y-4">
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Our Story</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Sustainability</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Careers</a>
+                        <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Blog</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                        Connect
+                    </h3>
+                    <div class="mt-4 flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between">
+                <p class="text-base text-gray-400 text-center md:text-left">
+                    © 2023 Urban Threads, Inc. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex justify-center space-x-6 md:order-2">
+                    <a href="#" class="text-gray-400 hover:text-gray-500 text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-gray-500 text-sm">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Notification -->
+    <div id="cart-notification" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md shadow-lg hidden">
+        Item added to your cart!
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-900">Payment Details</h3>
+                <button id="close-payment" class="text-gray-500 hover:text-gray-700">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="flex justify-around mb-6">
+                <div class="flex items-center">
+                    <input type="radio" id="card-option" name="payment-method" checked class="mr-2" onclick="showCardForm()">
+                    <label for="card-option" class="text-gray-700">Credit/Debit Card</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="radio" id="upi-option" name="payment-method" class="mr-2" onclick="showUPIForm()">
+                    <label for="upi-option" class="text-gray-700">UPI</label>
+                </div>
+            </div>
+
+            <div id="card-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" class="w-full px-3 py-2 border rounded-md">
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Expiry Date</label>
+                        <input type="text" placeholder="MM/YY" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">CVV</label>
+                        <input type="text" placeholder="123" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                </div>
+            </div>
+
+            <div id="upi-form" class="hidden">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">UPI ID</label>
+                    <input type="text" placeholder="yourname@upi" class="w-full px-3 py-2 border rounded-md">
+                </div>
+            </div>
+
+            <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">
+                Proceed to Payment
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Shopping cart functionality
+        const cartBtn = document.getElementById('cart-btn');
+        const cartDropdown = document.getElementById('cart-dropdown');
+        const cartCount = document.getElementById('cart-count');
+        const cartItems = document.getElementById('cart-items');
+        const cartNotification = document.getElementById('cart-notification');
+        
+        let cart = [];
+        
+        // Toggle cart dropdown
+        cartBtn.addEventListener('click', () => {
+            cartDropdown.classList.toggle('hidden');
+        });
+        
+        // Close cart dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!cartBtn.contains(event.target) && !cartDropdown.contains(event.target)) {
+                cartDropdown.classList.add('hidden');
+            }
+        });
+        
+        // Add to cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                const image = button.getAttribute('data-image');
+                
+                // Check if item already exists in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        image,
+                        quantity: 1
+                    });
+                }
+                
+                // Update cart count in UI 
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCount.textContent = totalItems;
+                
+                updateCart();
+                
+                // Show notification 
+                cartNotification.classList.remove('hidden');
+                setTimeout(() => {
+                    cartNotification.classList.add('hidden');
+                }, 3000);
+            });
+        });
+        
+        function updateCart() {
+            // Update cart items list
+            
+            // Update cart items list
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="p-4 text-center text-gray-500">Your cart is empty</div>';
+            } else {
+                cartItems.innerHTML = '';
+                
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'flex items-center p-4';
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md">
+                        <div class="ml-4 flex-1">
+                            <h4 class="text-sm font-medium text-gray-900 truncate">${item.name}</h4>
+                            <p class="text-sm text-gray-500">$${item.price.toFixed(2)} x ${item.quantity}</p>
+                        </div>
+                        <div class="ml-4">
+                            <button class="text-gray-400 hover:text-gray-500 remove-item" data-id="${item.id}">
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItem);
+                });
+                
+                // Add remove item functionality
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        const id = button.getAttribute('data-id');
+                        cart = cart.filter(item => item.id !== id);
+                        updateCart();
+                    });
+                });
+                
+                // Add subtotal
+                const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+                const subtotalElement = document.createElement('div');
+                subtotalElement.className = 'p-4 border-t border-gray-200 flex justify-between items-center';
+                subtotalElement.innerHTML = `
+                    <p class="font-medium">Subtotal</p>
+                    <p class="font-medium">$${subtotal.toFixed(2)}</p>
+                `;
+                cartItems.appendChild(subtotalElement);
+            }
+        }
+        
+        // Payment modal functionality
+        document.querySelectorAll('.buy-now').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById('payment-modal').classList.remove('hidden');
+            });
+        });
+
+        document.getElementById('close-payment').addEventListener('click', () => {
+            document.getElementById('payment-modal').classList.add('hidden');
+        });
+
+        function showCardForm() {
+            document.getElementById('card-form').classList.remove('hidden');
+            document.getElementById('upi-form').classList.add('hidden');
+        }
+
+        function showUPIForm() {
+            document.getElementById('upi-form').classList.remove('hidden');
+            document.getElementById('card-form').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', (event) => {
+            const modal = document.getElementById('payment-modal');
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
+
